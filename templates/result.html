@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center mb-4">e-Zirai Rehber - Bitki Hastalığı Analizi</h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Sol taraf: Yüklenen görüntü -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header text-center">
+                    <h3>Analiz Edilen Yaprak</h3>
+                </div>
+                <div class="card-body">
+                    <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" class="img-fluid rounded" alt="Yaprak Görüntüsü">
+                </div>
+                <div class="card-footer">
+                    <div class="result-item">
+                        <h4>{{ result.turkish_plant }} - {{ result.turkish_condition }}</h4>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" 
+                                 style="width: {{ result.probability }}%"
+                                 aria-valuenow="{{ result.probability }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                {{ "%.2f"|format(result.probability) }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-4">
+                <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg">Yeni Analiz</a>
+            </div>
+        </div>
+        
+        <!-- Sağ taraf: Hastalık bilgisi -->
+        <div class="col-md-8">
+            {% if disease_info %}
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3>Hastalık Analizi ve Tedavi Önerileri</h3>
+                </div>
+                <div class="card-body disease-info">
+                    <pre class="disease-text">{{ disease_info }}</pre>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
